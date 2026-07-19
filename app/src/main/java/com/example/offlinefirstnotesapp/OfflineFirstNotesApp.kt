@@ -3,7 +3,7 @@ package com.example.offlinefirstnotesapp
 import android.app.Application
 import com.example.offlinefirstnotesapp.core.di.databaseModule
 import com.example.offlinefirstnotesapp.core.di.networkModule
-import com.example.offlinefirstnotesapp.core.utils.SyncScheduler
+import com.example.offlinefirstnotesapp.features.notes.data.worker.SyncScheduler
 import com.example.offlinefirstnotesapp.features.di.notesModule
 import org.koin.android.ext.android.get
 import org.koin.android.ext.koin.androidContext

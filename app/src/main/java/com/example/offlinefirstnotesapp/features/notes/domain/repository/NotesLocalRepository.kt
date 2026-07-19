@@ -1,6 +1,6 @@
-package  com.example.offlinefirstnotesapp.features.notes.domain.repository
+package com.example.offlinefirstnotesapp.features.notes.domain.repository
 
-import  com.example.offlinefirstnotesapp.features.notes.domain.model.Note
+import com.example.offlinefirstnotesapp.features.notes.domain.model.Note
 import kotlinx.coroutines.flow.Flow
 
 interface NotesLocalRepository {
@@ -8,6 +8,8 @@ interface NotesLocalRepository {
     fun getNotes(): Flow<List<Note>>
 
     suspend fun addNote(note: Note)
+
+    suspend fun addNotes(notes: List<Note>)
 
     suspend fun deleteNote(note: Note)
 
@@ -19,5 +21,9 @@ interface NotesLocalRepository {
 
     suspend fun hardDeleteNote(id: String)
 
+    suspend fun hardDeleteNotes(ids: List<String>)
+
     suspend fun markAsSynced(id: String, updatedAt: Long)
+
+    suspend fun markAsSyncedBulk(ids: List<String>)
 }

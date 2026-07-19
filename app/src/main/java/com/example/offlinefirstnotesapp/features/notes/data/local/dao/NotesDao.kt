@@ -1,22 +1,21 @@
-package  com.example.offlinefirstnotesapp.features.notes.data.local.dao
+package com.example.offlinefirstnotesapp.features.notes.data.local.dao
 
 import androidx.room.Dao
 import androidx.room.Delete
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
+import androidx.room.Upsert
 import com.example.offlinefirstnotesapp.features.notes.data.local.entity.NotesEntity
 import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface NotesDao {
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun addNote(note: NotesEntity): Long
+    @Upsert
+    suspend fun upsertNote(note: NotesEntity)
 
-    @Update
-    suspend fun updateNote(note: NotesEntity)
+    @Upsert
+    suspend fun upsertNotes(notes: List<NotesEntity>)
 
     @Delete
     suspend fun deleteNote(note: NotesEntity)
@@ -33,6 +32,12 @@ interface NotesDao {
     @Query("DELETE FROM notes WHERE id = :id")
     suspend fun hardDeleteNote(id: String)
 
+    @Query("DELETE FROM notes WHERE id IN (:ids)")
+    suspend fun hardDeleteNotes(ids: List<String>)
+
     @Query("UPDATE notes SET isSynced = 1 WHERE id = :id AND updatedAt = :updatedAt")
     suspend fun markAsSynced(id: String, updatedAt: Long)
+    
+    @Query("UPDATE notes SET isSynced = 1 WHERE id IN (:ids)")
+    suspend fun markAsSyncedBulk(ids: List<String>)
 }

@@ -1,10 +1,10 @@
-package  com.example.offlinefirstnotesapp.features.notes.data.repository
+package com.example.offlinefirstnotesapp.features.notes.data.repository
 
-import  com.example.offlinefirstnotesapp.features.notes.data.local.dao.NotesDao
-import  com.example.offlinefirstnotesapp.features.notes.data.mapper.toEntity
-import  com.example.offlinefirstnotesapp.features.notes.data.mapper.toNote
-import  com.example.offlinefirstnotesapp.features.notes.domain.model.Note
-import  com.example.offlinefirstnotesapp.features.notes.domain.repository.NotesLocalRepository
+import com.example.offlinefirstnotesapp.features.notes.data.local.dao.NotesDao
+import com.example.offlinefirstnotesapp.features.notes.data.mapper.toEntity
+import com.example.offlinefirstnotesapp.features.notes.data.mapper.toNote
+import com.example.offlinefirstnotesapp.features.notes.domain.model.Note
+import com.example.offlinefirstnotesapp.features.notes.domain.repository.NotesLocalRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
@@ -18,7 +18,11 @@ class NotesLocalRepositoryImpl(
     }
 
     override suspend fun addNote(note: Note) {
-        notesDao.addNote(note.toEntity())
+        notesDao.upsertNote(note.toEntity())
+    }
+
+    override suspend fun addNotes(notes: List<Note>) {
+        notesDao.upsertNotes(notes.map { it.toEntity() })
     }
 
     override suspend fun deleteNote(note: Note) {
@@ -26,7 +30,7 @@ class NotesLocalRepositoryImpl(
     }
 
     override suspend fun updateNote(note: Note) {
-        notesDao.updateNote(note.toEntity())
+        notesDao.upsertNote(note.toEntity())
     }
 
     override suspend fun getUnsyncedNotes(): List<Note> {
@@ -41,7 +45,15 @@ class NotesLocalRepositoryImpl(
         notesDao.hardDeleteNote(id)
     }
 
+    override suspend fun hardDeleteNotes(ids: List<String>) {
+        notesDao.hardDeleteNotes(ids)
+    }
+
     override suspend fun markAsSynced(id: String, updatedAt: Long) {
         notesDao.markAsSynced(id, updatedAt)
+    }
+
+    override suspend fun markAsSyncedBulk(ids: List<String>) {
+        notesDao.markAsSyncedBulk(ids)
     }
 }

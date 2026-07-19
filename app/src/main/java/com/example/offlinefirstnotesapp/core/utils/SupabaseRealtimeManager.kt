@@ -15,6 +15,7 @@ import okhttp3.Request
 import okhttp3.Response
 import okhttp3.WebSocket
 import okhttp3.WebSocketListener
+import kotlin.time.Duration.Companion.milliseconds
 
 /**
  * Manages Supabase Realtime WebSocket connection for live data updates.
@@ -91,7 +92,7 @@ class SupabaseRealtimeManager(private val client: OkHttpClient) {
 
     private fun reconnect() {
         scope.launch {
-            delay(5000)
+            delay(5000.milliseconds)
             connect()
         }
     }

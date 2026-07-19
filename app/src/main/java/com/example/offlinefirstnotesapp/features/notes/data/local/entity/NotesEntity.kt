@@ -1,13 +1,24 @@
-package  com.example.offlinefirstnotesapp.features.notes.data.local.entity
+package com.example.offlinefirstnotesapp.features.notes.data.local.entity
 
 import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
+import androidx.room.Index
 import androidx.room.PrimaryKey
 import kotlinx.parcelize.Parcelize
 
+/**
+ * Room entity representing a note in the local database.
+ */
 @Parcelize
-@Entity(tableName = "notes")
+@Entity(
+    tableName = "notes",
+    indices = [
+        Index(value = ["updatedAt"]),
+        Index(value = ["isSynced"]),
+        Index(value = ["isDeleted"])
+    ]
+)
 data class NotesEntity(
     @PrimaryKey @ColumnInfo(name = "id") val id: String,
     @ColumnInfo(name = "title") val title: String,

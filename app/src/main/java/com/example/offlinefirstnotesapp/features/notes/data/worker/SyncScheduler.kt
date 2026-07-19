@@ -1,4 +1,4 @@
-package com.example.offlinefirstnotesapp.core.utils
+package com.example.offlinefirstnotesapp.features.notes.data.worker
 
 import android.content.Context
 import androidx.work.Constraints
@@ -8,7 +8,6 @@ import androidx.work.NetworkType
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
-import com.example.offlinefirstnotesapp.features.notes.data.worker.SyncWorker
 import java.util.concurrent.TimeUnit
 
 /**
